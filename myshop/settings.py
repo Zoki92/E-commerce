@@ -1,3 +1,4 @@
+from braintree import Configuration, Environment
 """
 Django settings for myshop project.
 
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -128,9 +130,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 CART_SESSION_ID = 'cart'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+BRAINTREE_MERCHANT_ID = "pyfgcs8jgchy4m2v"
+BRAINTREE_PUBLIC_KEY = "4fp8rgpf2x8dxnw7"
+BRAINTREE_PRIVATE_KEY = "c8ee8ba31ce8b664708f0c2ec1cb823a"
+
+
+Configuration.configure(
+    Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)
